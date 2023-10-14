@@ -78,9 +78,10 @@ dbt-spark can connect to Spark clusters by three different methods:
 
 
 - [`session`](#session) connects to a pySpark session, running locally or on a remote machine.
+- [`connect`](#connect) connects to a [Spark Connect](https://spark.apache.org/docs/latest/spark-connect-overview.html) cluster, running locally or on a remote machine
 
 :::info Advanced functionality
-The `session` connection method is intended for advanced users and experimental dbt development. This connection method is not supported by dbt Cloud.
+`session` and `connect` connection methods are intended for advanced users or experimental dbt development. These connection methods are not supported by dbt Cloud.
 :::
 
 
@@ -195,6 +196,31 @@ your_profile_name:
       host: NA                           # not used, but required by `dbt-core`
       server_side_parameters:
         "spark.driver.memory": "4g" 
+```
+
+</File>
+
+### Connect
+
+Use the `connect` connection method if you want to run `dbt` against a [Spark Connect](https://spark.apache.org/docs/latest/spark-connect-overview.html) cluster.
+
+<File name='~/.dbt/profiles.yml'>
+
+```yaml
+your_profile_name:
+  target: dev
+  outputs:
+    dev:
+      type: spark
+      method: connect
+      schema: [database/schema name]
+      host: [yourorg.sparkhost.com]
+      port: [port]                    # default: 443
+
+      # optional
+      user: [user]
+      use_ssl: [bool]                 # default: False
+      token: [token]
 ```
 
 </File>
